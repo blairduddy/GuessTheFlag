@@ -43,6 +43,6 @@ This project is available under the MIT License. See the [LICENSE](LICENSE) file
 
 
 
-![Simulator Screenshot - iPhone 13 Pro - 2023-05-16 at 15 20 21](https://github.com/blairduddy/GuessTheFlag/assets/64046027/a9ab4bfc-908f-4d53-9cb1-d0211833954f)
-![Simulator Screenshot - iPhone 13 Pro - 2023-05-16 at 15 20 27](https://github.com/blairduddy/GuessTheFlag/assets/64046027/3701b023-df34-409d-b833-5631926ef859)
-![Simulator Screenshot - iPhone 13 Pro - 2023-05-16 at 15 20 37](https://github.com/blairduddy/GuessTheFlag/assets/64046027/9a96fdae-321a-4529-ac3d-6f1a88e5da26)
+<img src="https://github.com/blairduddy/GuessTheFlag/assets/64046027/a9ab4bfc-908f-4d53-9cb1-d0211833954f" width="33%" />
+<img src="https://github.com/blairduddy/GuessTheFlag/assets/64046027/3701b023-df34-409d-b833-5631926ef859" width="33%" />
+<img src="https://github.com/blairduddy/GuessTheFlag/assets/64046027/9a96fdae-321a-4529-ac3d-6f1a88e5da26" width="33%" />
