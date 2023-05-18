@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+struct FlagImage: View {
+    var country: String
+   
+    var body: some View {
+        Image(country)
+            .renderingMode(.original)
+            .clipShape(Capsule())
+            .shadow(radius: 5)
+    }
+}
+
 struct ContentView: View {
     
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
@@ -15,6 +26,8 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     @State private var userScore = 0
     @State private var scoreMessage = ""
+    @State private var currentQuestion = 0
+    @State private var finalAlert = false
     
     
     func flagTapped(_ number: Int) {
@@ -27,12 +40,28 @@ struct ContentView: View {
             scoreMessage = "Not quite right, that looks more like the flag of \(countries[number])..."
         }
         
+        currentQuestion += 1
+        if currentQuestion >= 8 {
+            finalAlert = true
+            return
+        }
+        
         showingScore = true
     }
     
     func askQuestion() {
+        if currentQuestion < 8 {
+            countries.shuffle()
+            correctAnswer = Int.random(in: 0...2)
+        }
+    }
+    
+    func resetGame() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        userScore = 0
+        currentQuestion = 0
+        finalAlert = false
     }
     
     
@@ -64,10 +93,7 @@ struct ContentView: View {
                         Button {
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                                .clipShape(Capsule())
-                                .shadow(radius: 5)
+                            FlagImage(country: countries[number])
                         }
                     }
                     .alert(scoreTitle, isPresented: $showingScore) {
@@ -75,6 +101,12 @@ struct ContentView: View {
                     } message: {
                         Text(scoreMessage)
                     }
+                    .alert("Game Over", isPresented: $finalAlert) {
+                        Button("Start Again?", action: resetGame)
+                    } message: {
+                        Text("Your final score is \(userScore) out of 8!")
+                    }
+                    
                     
                     Spacer()
                     
