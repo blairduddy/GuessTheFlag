@@ -28,14 +28,22 @@ struct ContentView: View {
     @State private var scoreMessage = ""
     @State private var currentQuestion = 0
     @State private var finalAlert = false
+    @State private var animationAmount = 0.0
+    @State private var userTapped = 0
+    @State private var isCorrect = false
+    @State private var fadeOutIncorrect = false
     
     
     func flagTapped(_ number: Int) {
+        userTapped = number
         if number == correctAnswer {
+            isCorrect = true
             scoreTitle = "Correct"
             scoreMessage = "You nailed it! That's \(countries[number])!"
             userScore += 1
+            fadeOutIncorrect = true
         } else {
+            isCorrect = false
             scoreTitle = "Incorrect"
             scoreMessage = "Not quite right, that looks more like the flag of \(countries[number])..."
         }
@@ -53,6 +61,9 @@ struct ContentView: View {
         if currentQuestion < 8 {
             countries.shuffle()
             correctAnswer = Int.random(in: 0...2)
+            userTapped = 0
+            isCorrect = false
+            fadeOutIncorrect = false
         }
     }
     
@@ -92,8 +103,12 @@ struct ContentView: View {
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
-                        } label: {
+                        }
+                    label: {
                             FlagImage(country: countries[number])
+                            .rotation3DEffect(.degrees(userTapped == number && isCorrect ? 360 : 0 ), axis: (x: 0, y: 1, z: 0))
+                            .animation(.easeOut(duration: 1.5), value: userTapped)
+                            .opacity(fadeOutIncorrect && number != correctAnswer ? 0.25 : 1)
                         }
                     }
                     .alert(scoreTitle, isPresented: $showingScore) {
@@ -106,7 +121,6 @@ struct ContentView: View {
                     } message: {
                         Text("Your final score is \(userScore) out of 8!")
                     }
-                    
                     
                     Spacer()
                     
